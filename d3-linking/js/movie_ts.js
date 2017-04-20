@@ -193,6 +193,36 @@ d3.csv("data/movie_list_d3.csv",function(data) {
             .attr("font-size", "25px")
             .attr("fill", "gray");  
 
+    timeseriessvg.append("circle")  ///legend
+                .attr("cx",100)
+                .attr("cy", 10)
+                .attr("r",5)
+                .attr("fill", "green")
+                .style("opacity",0.3)
+    timeseriessvg.append("text")  ///legend
+                .text("Profitable")
+                .attr("x",110)
+                .attr("y", 15)
+                .attr("fill", "green")
+                .attr("text-anchor", "start")
+                .attr("font-family", "sans-serif")
+                .attr("font-size", "12px")
+    timeseriessvg.append("circle")  ///legend
+                .attr("cx",100)
+                .attr("cy", 30)
+                .attr("r",5)
+                .attr("fill", "red")
+                .style("opacity",0.3)
+    timeseriessvg.append("text")  ///legend
+                .text("Not Profitable")
+                .attr("x",110)
+                .attr("y", 35)
+                .attr("fill", "red")
+                .attr("text-anchor", "start")
+                .attr("font-family", "sans-serif")
+                .attr("font-size", "12px")
+
+
     timeseriessvg.append("g")
         .attr("class", "axis axis--x")
         .attr("transform", "translate(0," + 560 + ")")
