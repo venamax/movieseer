@@ -1,13 +1,18 @@
 
 
+var bar_height = 600
+var bar_width = 600
+var ts_height = 600
+var ts_width = 600
+
 var barchartsvg = d3.select("#mybarchart").append("svg")
-    .attr("height",300)
-    .attr("width",300);
+    .attr("height",bar_height)
+    .attr("width",bar_width);
 
 
 var timeseriessvg = d3.select("#mytimeseries").append("svg")
-    .attr("height",300)
-    .attr("width",600);
+    .attr("height",ts_height)
+    .attr("width",ts_width);
 
 d3.csv("data/movie_list_d3.csv",function(data) {
     
@@ -22,21 +27,23 @@ d3.csv("data/movie_list_d3.csv",function(data) {
     
     var barx = d3.scaleLinear()
         //.domain(d3.extent(rev))
-        .domain([1,1000])
-        .rangeRound([40, 300]);
+        .domain([1,1500])
+        //.rangeRound([40, 300]);
+        .rangeRound([80, bar_width]);
 
     console.log(d3.extent(rev));
 
     var bins = d3.histogram()
         .domain(barx.domain())
-        .thresholds(barx.ticks(60))
+        .thresholds(barx.ticks(40))
     (rev);
 
     console.log(bins);
 
     var bary = d3.scaleLinear()
         .domain([0, d3.max(bins, function(d) { return d.length; })])
-        .range([280, 10]);
+        //.range([280, 10]);
+        .range([bar_height-40, 10]);
 
     var bar = barchartsvg.selectAll(".bar")
         .data(bins)
@@ -47,11 +54,12 @@ d3.csv("data/movie_list_d3.csv",function(data) {
     bar.append("rect")
         .attr("x", 1)
         .attr("width", barx(bins[0].x1) - barx(bins[0].x0) - 1)
-        .attr("height", function(d) { return 280 - bary(d.length); })
+        .attr("height", function(d) { return bar_height-40 - bary(d.length); })
         .attr("fill", function(d) { return "rgb(0, 0, " + (d.length * 10) + ")"})
-        .on("click",function(d,i) {
+        .on("click",function(d,i) { 
             // console.log(d);
             // console.log(i);
+            d3.select(this).attr("fill", "orange");
             var range = [d.x0,d.x1];
             d3.selectAll("circle").style("visibility","hidden");
             d3.selectAll("circle").filter(function(d,i) {
@@ -69,13 +77,34 @@ d3.csv("data/movie_list_d3.csv",function(data) {
 
     barchartsvg.append("g")
         .attr("class", "axis axis--x")
-        .attr("transform", "translate(0," + 280 + ")")
+        .attr("transform", "translate(0," + 560 + ")")
         .call(d3.axisBottom(barx));
 
     barchartsvg.append("g")
         .attr("class", "axis axis--x")
-        .attr("transform", "translate(40," + 00 + ")")
+        .attr("transform", "translate(80," + 00 + ")")
         .call(d3.axisLeft(bary));
+
+     barchartsvg.append("text")
+            .attr("class", "y label")
+            .text("Number of movies")
+            .attr("x", -300)
+            .attr("y",20)
+            .attr("text-anchor", "middle")
+            .attr("font-family", "sans-serif")
+            .attr("font-size", "25px")
+            .attr("transform", "rotate(-90)")
+            .attr("fill", "gray");   
+        
+    barchartsvg.append("text")
+            .attr("class", "x label")
+            .text("Box-Office in Millions of USD")
+            .attr("x", 500)
+            .attr("y",600)
+            .attr("text-anchor", "middle")
+            .attr("font-family", "sans-serif")
+            .attr("font-size", "25px")
+            .attr("fill", "gray");  
 
  
     //var format = d3.timeFormat("%m-%d-%Y")
@@ -85,12 +114,12 @@ d3.csv("data/movie_list_d3.csv",function(data) {
     var timex = d3.scaleLinear()
         //.domain(d3.extent(times))
         .domain([d3.isoParse('01-01-1999'), d3.isoParse('12-31-2017') ])
-        .range([40, 600]);
+        .range([80, 600]);
 
     var timey = d3.scaleLinear()
         //.domain(d3.extent(rev))
         .domain([0,1600])
-        .range([280,10]);
+        .range([560,10]);
 
 
     var profit_color = filtered_data.map(function(d){if (+d.profit_class > 0){return "green"} else {return "red"} });
@@ -98,6 +127,7 @@ d3.csv("data/movie_list_d3.csv",function(data) {
     var site = filtered_data.map(function(d){return d.site})
     var return_label = filtered_data.map(function(d){ return "ROI = "+ formatPercent(d.return)});
     console.log(site)
+    
     timeseriessvg.selectAll(".circle")
         .data(filtered_data)
         .enter()
@@ -142,12 +172,34 @@ d3.csv("data/movie_list_d3.csv",function(data) {
         })
 
 
+ timeseriessvg.append("text")
+            .attr("class", "y label")
+            .text("Box-Office in Millions of USD")
+            .attr("x", -300)
+            .attr("y",20)
+            .attr("text-anchor", "middle")
+            .attr("font-family", "sans-serif")
+            .attr("font-size", "25px")
+            .attr("transform", "rotate(-90)")
+            .attr("fill", "gray");   
+        
+    timeseriessvg.append("text")
+            .attr("class", "x label")
+            .text("Year of Realease")
+            .attr("x", 500)
+            .attr("y",600)
+            .attr("text-anchor", "middle")
+            .attr("font-family", "sans-serif")
+            .attr("font-size", "25px")
+            .attr("fill", "gray");  
+
     timeseriessvg.append("g")
         .attr("class", "axis axis--x")
-        .attr("transform", "translate(0," + 280 + ")")
+        .attr("transform", "translate(0," + 560 + ")")
         .call(d3.axisBottom(timex).tickFormat(d3.timeFormat("%Y")));
 
     timeseriessvg.append("g")
         .attr("class", "axis axis--x")
-        .attr("transform", "translate(40," + 00 + ")")
+        .attr("transform", "translate(80," + 00 + ")")
         .call(d3.axisLeft(timey));})
+
