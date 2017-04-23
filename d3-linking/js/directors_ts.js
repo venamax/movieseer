@@ -383,7 +383,7 @@ d3.csv("data/director_sum_d3.csv",function(data) {
     /// Label Legend for Profitability
     timeseriessvg.append("ellipse")  ///legend
                 .attr("id", "legend")
-                .attr("cx",100)
+                .attr("cx",500)
                 .attr("cy", 10)
                 .attr("rx",5)
                 .attr("ry",5)
@@ -391,7 +391,7 @@ d3.csv("data/director_sum_d3.csv",function(data) {
                 .style("opacity",0.3)
     timeseriessvg.append("text")  ///legend
                 .text("Profitable")
-                .attr("x",110)
+                .attr("x",510)
                 .attr("y", 15)
                 .attr("fill", "green")
                 .attr("text-anchor", "start")
@@ -399,7 +399,7 @@ d3.csv("data/director_sum_d3.csv",function(data) {
                 .attr("font-size", "12px")
     timeseriessvg.append("ellipse")  ///legend
                 .attr("id", "legend")
-                .attr("cx",100)
+                .attr("cx",500)
                 .attr("cy", 30)
                 .attr("rx",5)
                 .attr("ry",5)
@@ -407,7 +407,7 @@ d3.csv("data/director_sum_d3.csv",function(data) {
                 .style("opacity",0.3)
     timeseriessvg.append("text")  ///legend
                 .text("Not Profitable")
-                .attr("x",110)
+                .attr("x",510)
                 .attr("y", 35)
                 .attr("fill", "red")
                 .attr("text-anchor", "start")
