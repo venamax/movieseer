@@ -192,7 +192,7 @@ d3.csv("data/movie_list_d3.csv",function(data) {
     //// Label axis
     timeseriessvg.append("text")
             .attr("class", "y label")
-            .text("Gross Profit from Box Office in Millions of USD")
+            .text("Gross Profit from Box Office in Millions of USD (not including Marketing Expense)")
             .attr("x", -300)
             .attr("y",20)
             .attr("text-anchor", "middle")
