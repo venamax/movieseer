@@ -131,15 +131,18 @@ d3.csv("data/movie_list_d3.csv",function(data) {
     /// match values to y position in timeseries chart
     var timey = d3.scaleLinear()
         //.domain(d3.extent(rev))
-        .domain([0,1600])
+        .domain([-200,600])
         .range([560,10]);
 
     /// Define label variables
     var profit_color = filtered_data.map(function(d){if (+d.profit_class > 0){return "green"} else {return "red"} });
     var text_pos = filtered_data.map(function(d){if (d3.isoParse(d.release_date) > d3.isoParse('01-01-2009')){return "end"} else {return "start"} });
-    var formatPercent = d3.format(",.0%")
-    var site = filtered_data.map(function(d){return d.site})
+    var formatPercent = d3.format(",.0%");
+    var site = filtered_data.map(function(d){return d.site});
     var return_label = filtered_data.map(function(d){ return "ROI = "+ formatPercent(d.return)});
+    var profit = filtered_data.map(function(d){ return +d.gross_profit/1000000});
+    var x_pos_1 = filtered_data.map(function(d){if(+d.profit_class >0){return 70} else {return -70}})
+    var x_pos_2 = filtered_data.map(function(d){if(+d.profit_class >0){return 50} else {return -90}})
     ///console.log(site)
     
     /// Render timeseries chart
@@ -148,7 +151,7 @@ d3.csv("data/movie_list_d3.csv",function(data) {
         .enter()
         .append("circle")
         .attr("cx",function(d,i) { return timex(times[i]); })
-        .attr("cy",function(d,i) { return timey(rev[i]); })
+        .attr("cy",function(d,i) { return timey(profit[i]); })
         .attr("r",4)
         .attr("fill", function(d,i) { return profit_color[i] })
         .style("opacity",0.3)
@@ -159,7 +162,7 @@ d3.csv("data/movie_list_d3.csv",function(data) {
             .attr("id", "tooltip1")
             .text(d.title_clean)
             .attr("dx",timex(times[i]))
-            .attr("dy",timey(rev[i]+100))
+            .attr("dy",timey(profit[i]+x_pos_1[i]))
             .attr("text-anchor", text_pos[i])
             .attr("font-family", "sans-serif")
             .attr("font-size", "13px")
@@ -169,7 +172,7 @@ d3.csv("data/movie_list_d3.csv",function(data) {
             .attr("id", "tooltip2")            
             .text(return_label[i])
             .attr("dx",timex(times[i]))
-            .attr("dy",timey(rev[i]+60))
+            .attr("dy",timey(profit[i]+x_pos_2[i]))
             .attr("text-anchor", text_pos[i])
             .attr("font-family", "sans-serif")
             .attr("font-size", "11px")
@@ -189,7 +192,7 @@ d3.csv("data/movie_list_d3.csv",function(data) {
     //// Label axis
     timeseriessvg.append("text")
             .attr("class", "y label")
-            .text("Box Office in Millions of USD")
+            .text("Gross Profit from Box Office in Millions of USD")
             .attr("x", -300)
             .attr("y",20)
             .attr("text-anchor", "middle")
