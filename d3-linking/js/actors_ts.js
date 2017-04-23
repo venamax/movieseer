@@ -460,8 +460,8 @@ d3.csv("data/actor_sum_d3.csv",function(data) {
             .attr("fill", "gray");          
     timeseriessvg.append("text")
             .attr("class", "x label")
-            .text("Number of movies made by each actor")
-            .attr("x", 480)
+            .text("Number of movies where each actor played a role")
+            .attr("x", 460)
             .attr("y",595)
             .attr("text-anchor", "middle")
             .attr("font-family", "sans-serif")
