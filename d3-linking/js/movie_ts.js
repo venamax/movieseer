@@ -138,11 +138,13 @@ d3.csv("data/movie_list_d3.csv",function(data) {
     var profit_color = filtered_data.map(function(d){if (+d.profit_class > 0){return "green"} else {return "red"} });
     var text_pos = filtered_data.map(function(d){if (d3.isoParse(d.release_date) > d3.isoParse('01-01-2009')){return "end"} else {return "start"} });
     var formatPercent = d3.format(",.0%");
+    var formatrev = filtered_data.map(function(d,i) { return "$" + d3.format(",.0f")(rev[i]); });
     var site = filtered_data.map(function(d){return d.site});
     var return_label = filtered_data.map(function(d){ return "ROI = "+ formatPercent(d.return)});
     var profit = filtered_data.map(function(d){ return +d.gross_profit/1000000});
-    var x_pos_1 = filtered_data.map(function(d){if(+d.profit_class >0){return 70} else {return -70}})
-    var x_pos_2 = filtered_data.map(function(d){if(+d.profit_class >0){return 50} else {return -90}})
+    var x_pos_1 = filtered_data.map(function(d){if(+d.profit_class >0){return 75} else {return -75}})
+    var x_pos_2 = filtered_data.map(function(d){if(+d.profit_class >0){return 50} else {return -100}})
+    var x_pos_3 = filtered_data.map(function(d){if(+d.profit_class >0){return 25} else {return -125}})
     ///console.log(site)
     
     /// Render timeseries chart
@@ -170,9 +172,19 @@ d3.csv("data/movie_list_d3.csv",function(data) {
             .attr("fill", "black");
     timeseriessvg.append("text")
             .attr("id", "tooltip2")            
-            .text(return_label[i])
+            .text("Box office : "+ formatrev[i]+'MM')
             .attr("dx",timex(times[i]))
             .attr("dy",timey(profit[i]+x_pos_2[i]))
+            .attr("text-anchor", text_pos[i])
+            .attr("font-family", "sans-serif")
+            .attr("font-size", "11px")
+            .attr("font-style", "italic")
+            .attr("fill", "gray")
+    timeseriessvg.append("text")
+            .attr("id", "tooltip3")            
+            .text(return_label[i])
+            .attr("dx",timex(times[i]))
+            .attr("dy",timey(profit[i]+x_pos_3[i]))
             .attr("text-anchor", text_pos[i])
             .attr("font-family", "sans-serif")
             .attr("font-size", "11px")
@@ -186,6 +198,7 @@ d3.csv("data/movie_list_d3.csv",function(data) {
         //Remove the tooltip
             d3.select("#tooltip1").remove();
             d3.select("#tooltip2").remove();
+            d3.select("#tooltip3").remove();
 
         })
 
