@@ -474,7 +474,7 @@ d3.csv("data/feature_sum_d3.csv",function(data) {
     timeseriessvg.append("text")
             .attr("class", "x label")
             .text("Average profit of a movie in the cluster in millions of USD")
-            .attr("x", 460)
+            .attr("x", 420)
             .attr("y",595)
             .attr("text-anchor", "middle")
             .attr("font-family", "sans-serif")
