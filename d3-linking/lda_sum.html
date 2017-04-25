@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>my linked viz</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">    
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+
+    <div class="container">    
+      <div class="row">
+	<div class="col-sm-6">
+          <h4>Number of movies by plot clusters</h4>
+          <h5>Click on any bar to filter movies on the right</h5>
+	  <div id="mybarchart">
+	  </div>
+	</div> <!-- col -->
+	<div class="col-sm-6">
+          <h4>Profitabilty of movies over time filtered by plot clusters</h4>
+          <h5>Each circle represents a plot cluster</h5>
+	  <div id="mytimeseries">
+	  </div>
+	</div>  <!--col -->        
+      </div> <!-- row -->
+    </div> <!-- container -->	    
+	    
+    <!-- page content -->
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/d3.v4.min.js"></script>
+    <!-- modules we need outside of default bundle (these are in default) -->
+    <!-- <script src="https://d3js.org/d3-time.v1.min.js"></script> -->
+    <!-- <script src="https://d3js.org/d3-time-format.v2.min.js"></script> -->
+    <script src="js/lda_sum_ts.js?v=2"></script>
+  </body>
+</html>
