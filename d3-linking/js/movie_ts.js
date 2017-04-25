@@ -131,7 +131,7 @@ d3.csv("data/movie_list_d3.csv",function(data) {
     /// match values to y position in timeseries chart
     var timey = d3.scaleLinear()
         //.domain(d3.extent(rev))
-        .domain([-200,600])
+        .domain([-200,800])
         .range([560,10]);
 
     /// Define label variables
