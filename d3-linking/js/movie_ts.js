@@ -24,7 +24,7 @@ d3.csv("data/movie_list_d3.csv",function(data) {
 
 ////  Bar Chart /////////////////////////////////
     //// filter data to inlude movies with less than 1.5 billion in reveues and release after 1999
-    var filtered_data = data.filter(function(d) { return (+d.revenues_clean/1000000) < 1500; })
+    var filtered_data = data.filter(function(d) { return (+d.revenues_clean/1000000) < 2000; })
                    .filter(function(d) { return d3.isoParse(d.release_date) > d3.isoParse('01-01-2000'); })
               
     //// Box Office in millions of USD

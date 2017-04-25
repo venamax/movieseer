@@ -24,7 +24,7 @@ d3.csv("data/feature_d3.csv",function(data) {
 
 ////  Bar Chart /////////////////////////////////
     //// filter data to inlude movies with less than 1.5 billion in reveues and release after 1999
-    var filtered_data = data.filter(function(d) { return (+d.revenues_clean/1000000) < 1500; })
+    var filtered_data = data.filter(function(d) { return (+d.revenues_clean/1000000) > 0; })
                    .filter(function(d) { return d3.isoParse(d.release_date) > d3.isoParse('01-01-2000')})
                     .filter(function(d){return +d.length_clean > 60 &&  +d.length_clean < 240}); 
               
@@ -134,7 +134,7 @@ d3.csv("data/feature_d3.csv",function(data) {
     /// match values to y position in timeseries chart
     var timey = d3.scaleLinear()
         //.domain(d3.extent(rev))
-        .domain([-200,600])
+        .domain([-200,800])
         .range([560,10]);
 
     /// Define label variables
